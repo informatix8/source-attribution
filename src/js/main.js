@@ -128,7 +128,8 @@ class SourceAttribution {
         this.trackEventGA(this.copyCategory, this.copyEvent + '_selection', selection);
 
         if (selection.toString().length > this.minimumSelectionLength) {
-            event.clipboardData.setData('text/plain', selection + this.copySuffix);
+            var trimmed = selection.toString().replace(/^\s+|\s+$/g, '');
+            event.clipboardData.setData('text/plain', '"' + trimmed + '"' + this.copySuffix);
             event.preventDefault();
         }
         this.callCustom('postCopy');
