@@ -108,6 +108,13 @@ class SourceAttribution {
         }
     }
 
+    /**
+     * @method copy
+     * @memberOf SourceAttribution
+     * @instance
+     * @summary Copy event listener
+     * @private
+     */
     copy (event) {
         this.callCustom('preCopy');
         var selection = document.getSelection();
