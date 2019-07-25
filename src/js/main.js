@@ -11,6 +11,8 @@ class SourceAttribution {
      @param {String} [options.copyEvent="copy"] - The Google Analytics event name
      @param {String} [options.minimumSelectionLength=25] -  More than this amount of characters copied adds the attribution suffix to the clipboard
      @param {String} [options.copySuffix="\n\nCopied from...\nRead more...\n"] - The text to place after the copied text
+     @param {Boolean} [options.trimLeadingTrailingWhitespace=true] - Trim the copied text’s whitespace at the beginning and end
+     @param {Boolean} [options.addQuotes=true] - Add quotes around the copied text
      @param {Object} [options.callbacks] - User supplied functions to execute at given stages of the component lifecycle
      @param {Function} options.callbacks.preCreate
      @param {Function} options.callbacks.postCreate
@@ -32,6 +34,8 @@ class SourceAttribution {
             throw 'SourceAttribution you must supply a productName';
         }
 
+        defaults.trimLeadingTrailingWhitespace = true;
+        defaults.addQuots = true;
         defaults.copyCategory = 'engagement';
         defaults.copyEvent = 'copy';
         defaults.minimumSelectionLength = 25;
@@ -128,8 +132,17 @@ class SourceAttribution {
         this.trackEventGA(this.copyCategory, this.copyEvent + '_selection', selection);
 
         if (selection.toString().length > this.minimumSelectionLength) {
-            var trimmed = selection.toString().replace(/^\s+|\s+$/g, '');
-            event.clipboardData.setData('text/plain', '"' + trimmed + '"' + this.copySuffix);
+            var result = selection.toString();
+
+            if (this.trimLeadingTrailingWhitespace) {
+                result = result.replace(/^\s+|\s+$/g, '');
+            }
+
+            if (this.addQuotes) {
+                result = '"' + result + '"';
+            }
+
+            event.clipboardData.setData('text/plain', result + this.copySuffix);
             event.preventDefault();
         }
         this.callCustom('postCopy');
