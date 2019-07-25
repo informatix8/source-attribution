@@ -9,28 +9,41 @@ class SourceAttribution {
      @param {Object} [options.callbacks] - User supplied functions to execute at given stages of the component lifecycle
      @param {Function} options.callbacks.preCreate
      @param {Function} options.callbacks.postCreate
+     @param {Function} options.callbacks.preCopy
+     @param {Function} options.callbacks.postCopy
      @param {Function} options.callbacks.preDestroy
      @param {Function} options.callbacks.postDestroy
      */
 
-    constructor(options) {
+    constructor (options) {
         if (options === undefined) {
             options = {};
         }
 
         const defaults = {};
 
+        //User supplied productName is required
+        if (options.productName === undefined || options.productName === null) {
+            throw 'SourceAttribution you must supply a productName';
+        }
+
         defaults.copyCategory = 'engagement';
         defaults.copyEvent = 'copy';
-        defaults.productName = 'Product Name TBD';
+        defaults.minimumSelectionLength = 25;
+        defaults.copySuffix = '\n\n' +
+        'Copied from: ' + options.productName + '\n' +
+        'Read more: ' + window.location.href +
+        '\n';
 
         //put supplied options on top of defaults
         merge(this, defaults, options);
 
         this.callCustom('preCreate');
 
+        this.copyFn = this.copy.bind(this);
         const destroyFn = this.destroy.bind(this);
 
+        document.body.addEventListener('copy', this.copyFn);
         window.addEventListener('unload', destroyFn);
 
         this.callCustom('postCreate');
@@ -43,9 +56,12 @@ class SourceAttribution {
      * @summary Destroy
      * @private
      */
-    destroy() {
+    destroy () {
         this.callCustom('preDestroy');
-        //TODO
+        if (this.copyFn !== null) {
+            document.body.removeEventListener('copy', this.copyFn);
+            this.copyFn = null;
+        }
         this.callCustom('postDestroy');
     }
 
@@ -56,7 +72,7 @@ class SourceAttribution {
      * @summary execute an implementation defined callback on a certain action
      * @private
      */
-    callCustom(userFn) {
+    callCustom (userFn) {
         const sliced = Array.prototype.slice.call(arguments, 1);
 
         if (this.callbacks !== undefined && this.callbacks[userFn] !== undefined && typeof this.callbacks[userFn] === 'function') {
@@ -90,6 +106,20 @@ class SourceAttribution {
         else if (typeof (window.ga) !== 'undefined') {
             window.ga('send', 'event', category, action, label, value);
         }
+    }
+
+    copy (event) {
+        this.callCustom('preCopy');
+        var selection = document.getSelection();
+
+        this.trackEventGA(this.copyCategory, this.copyEvent + '_url', window.location.href);
+        this.trackEventGA(this.copyCategory, this.copyEvent + '_selection', selection);
+
+        if (selection.toString().length > this.minimumSelectionLength) {
+            event.clipboardData.setData('text/plain', selection + this.copySuffix);
+            event.preventDefault();
+        }
+        this.callCustom('postCopy');
     }
 }
 
