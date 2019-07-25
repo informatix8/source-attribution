@@ -11,7 +11,10 @@ body {
 
 main {
     background-color: #fff;
-    display: flex;
     margin: 0 auto;
     max-width: 1440px;
+}
+
+article {
+    margin: 0 16px;
 }
