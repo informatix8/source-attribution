@@ -2,7 +2,7 @@
   "name": "@informatix8/source-attribution",
   "version": "1.0.0",
   "title": "Source Attribution",
-  "description": "TODO",
+  "description": "Append content to copied clipboard text.",
   "license": "ISC",
   "main": "dist/source-attribution.cjs.js",
   "module": "dist/source-attribution.esm.js",

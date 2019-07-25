@@ -4,7 +4,7 @@ class SourceAttribution {
 
     /**
      @class SourceAttribution
-     @summary Copy/paste source attribution
+     @summary Append content to copied clipboard text.
      @param {Object} options - Supplied configuration
      @param {String} [options.productName] - The name of the product you wish to attribute the copied text to **Required**
      @param {String} [options.copyCategory="engagement"] - The Google Analytics category name
@@ -35,7 +35,7 @@ class SourceAttribution {
         }
 
         defaults.trimLeadingTrailingWhitespace = true;
-        defaults.addQuots = true;
+        defaults.addQuotes = true;
         defaults.copyCategory = 'engagement';
         defaults.copyEvent = 'copy';
         defaults.minimumSelectionLength = 25;

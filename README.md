@@ -1,13 +1,15 @@
 # Source Attribution
 
-Summary TODO
+Append content to copied clipboard text.
 
 ## Features
--
+- Append your product name and source URL to copied text from your web page
+- Custom copied character count threshold for addiing the content
+- Tag copy events in Google Analytics
 
 ## Dependencies
 
-1. Lodash merge function.
+- Lodash merge function
 
 ## Usage
 
@@ -27,8 +29,7 @@ npm install @informatix8/source-attribution --save-dev
 
 ```javascript
 new SourceAttribution({
-  foo: 'foo',
-  bar: 'bar'
+  productName: 'My Product'
 });
 ```
 
