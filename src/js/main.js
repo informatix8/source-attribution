@@ -6,6 +6,11 @@ class SourceAttribution {
      @class SourceAttribution
      @summary Copy/paste source attribution
      @param {Object} options - Supplied configuration
+     @param {String} [options.productName] - The name of the product you wish to attribute the copied text to **Required**
+     @param {String} [options.copyCategory="engagement"] - The Google Analytics category name
+     @param {String} [options.copyEvent="copy"] - The Google Analytics event name
+     @param {String} [options.minimumSelectionLength=25] -  More than this amount of characters copied adds the attribution suffix to the clipboard
+     @param {String} [options.copySuffix="\n\nCopied from...\nRead more...\n"] - The text to place after the copied text
      @param {Object} [options.callbacks] - User supplied functions to execute at given stages of the component lifecycle
      @param {Function} options.callbacks.preCreate
      @param {Function} options.callbacks.postCreate
