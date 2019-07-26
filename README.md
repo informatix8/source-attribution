@@ -33,6 +33,22 @@ new SourceAttribution({
 });
 ```
 
+### Add Google Analytics
+
+Google Analytics instructs that you add their javascript to the `<head>` of your document.
+
+```html
+<head>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-xxxxxxxxx-x"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-xxxxxxxxx-x');
+    </script>
+</head>
+```
+
 ## Development
 
 ```shell
