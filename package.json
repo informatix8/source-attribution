@@ -1,6 +1,6 @@
 {
   "name": "@informatix8/source-attribution",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "Source Attribution",
   "description": "Append content to copied clipboard text.",
   "license": "ISC",

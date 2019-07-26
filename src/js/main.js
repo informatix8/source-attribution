@@ -12,7 +12,7 @@ class SourceAttribution {
      @param {String} [options.minimumSelectionLength=25] -  More than this amount of characters copied adds the attribution suffix to the clipboard
      @param {String} [options.copySuffix="\n\nCopied from...\nRead more...\n"] - The text to place after the copied text
      @param {Boolean} [options.trimLeadingTrailingWhitespace=true] - Trim the copied text’s whitespace at the beginning and end
-     @param {Boolean} [options.addQuotes=true] - Add quotes around the copied text
+     @param {Boolean} [options.addQuotes=true] - Add smart quotes around the copied text “”
      @param {Object} [options.callbacks] - User supplied functions to execute at given stages of the component lifecycle
      @param {Function} options.callbacks.preCreate
      @param {Function} options.callbacks.postCreate
@@ -139,7 +139,7 @@ class SourceAttribution {
             }
 
             if (this.addQuotes) {
-                result = '"' + result + '"';
+                result = '“' + result + '”';
             }
 
             event.clipboardData.setData('text/plain', result + this.copySuffix);
